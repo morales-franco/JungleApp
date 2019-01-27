@@ -1,0 +1,25 @@
+﻿@model JungleApp.Models.Dog
+@{
+    ViewData["Title"] = "ReadonlyKeyword";
+}
+
+<h2>Dogs say hello!</h2>
+<div class="panel panel-success">
+    <div class="panel-heading">Topics</div>
+    <div class="panel-body">
+        <p>
+            Test Readonly & const Keyword
+        </p>
+        <p>
+            For more details check my blog: https://fmoralesdev.com/
+        </p>
+    </div>
+
+    <ul class="list-group">
+        <li class="list-group-item">Name: @Model.Name</li>
+        <li class="list-group-item">Birth: @Model.Birth</li>
+        <li class="list-group-item">Breed: @Model.Breed</li>
+        <li class="list-group-item">Color: @Model.Color</li>
+        <li class="list-group-item">Mood: @Model.Mood</li>
+    </ul>
+</div>
