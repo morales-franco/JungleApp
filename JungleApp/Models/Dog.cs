@@ -15,8 +15,15 @@ namespace JungleApp.Models
         public string Breed { get;  set; }
         public string Name { get;  set; }
 
-        public string Mood { get; private set; } 
-        
+        public string Mood { get; private set; }
+
+        public IList<Food> FavoriteFoods { get; set; }
+
+        public Dog()
+        {
+
+        }
+
         public Dog(DateTime birth, string breed, string name)
         {
             if (string.IsNullOrEmpty(breed) || string.IsNullOrEmpty(name))
