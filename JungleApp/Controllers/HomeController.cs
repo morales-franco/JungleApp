@@ -12,14 +12,33 @@ namespace JungleApp.Controllers
     {
         public IActionResult Index()
         {
-            TestArray();
-            TestDoWhile();
-            TestRefAndOut();
-            TestCat();
+            Chapter2();
+            Chapter3();
+            Chapter4();
             return View();
         }
 
-        private void TestCat()
+        private void Chapter4()
+        {
+            /*
+             * TODO: Boxing/Unboxing 
+             * Cast type to object and object to type
+             * Boxing and Unboxing are very expensive in terms of computation operations for a processor. 
+             * Therefore,it is best to avoid using value types where they must be boxed and unboxed many times
+             */
+            Debug.WriteLine("############ Boxing/Unboxing ############");
+            Debug.WriteLine("## Boxing ##");
+            int myRandomNumber = 98;
+            object boxedAge = myRandomNumber;
+
+            Debug.WriteLine("## Unboxing ##");
+            int unboxedAge = (int)boxedAge;
+
+
+
+        }
+
+        private void Chapter3()
         {
             Debug.WriteLine("############ TestConstructor ############");
             Cat miau = new Cat("Michi", "white");
@@ -50,6 +69,42 @@ namespace JungleApp.Controllers
             miau.Lenght = 3; //protected internal
             miau.IsVaccinated = false; //public
 
+            Debug.WriteLine("############ Test Indexers ############");
+
+            Debug.WriteLine($"Indexers - Encapsule array - Cat says: Today I eat:  { miau[0] } ");
+
+            Debug.WriteLine("############ Test Interface ############");
+            miau.AskForMoreFood();
+
+            Debug.WriteLine("############ Test Polymorphism ############");
+
+            Debug.WriteLine("#### Test Static Polymorphism ####");
+
+            Debug.WriteLine("## Method Overloading ##");
+            Debug.WriteLine("# By Length of Parameters #");
+            miau.Eat();
+            miau.Eat("fish");
+            miau.Eat("fish1", "fish2");
+
+            Debug.WriteLine("# By Type of Parameters #");
+            miau.Eat(new Food() { FoodId = 1, Name = "super fish" });
+
+            Debug.WriteLine("## Operator Overloading ##");
+
+            Debug.WriteLine($"Cat { miau.Name } says: I have { miau.LivesLeft } lives left");
+            miau++;
+            miau++;
+            Debug.WriteLine($"Cat { miau.Name } says: Now I have { miau.LivesLeft } lives left (overload ++)");
+
+            Debug.WriteLine($"Cat { miau.Name } says: Compare 1 { miau < miau }  - Compare 2 { miau > miau } (overload < & >)");
+
+
+            Debug.WriteLine("#### Test Dynamic Polymorphism ####");
+            Debug.WriteLine("# Virtual methods #");
+            miau.Move();
+            Debug.WriteLine("# Abstract methods #");
+            miau.Eat();
+
         }
 
         private void TestDoWhile()
@@ -64,34 +119,6 @@ namespace JungleApp.Controllers
                 counter++;
 
             } while (counter < animals.Length );
-        }
-
-
-
-        /*
-         * Action Method
-         */
-        public IActionResult ReadonlyKeyword()
-        {
-            var dog = new Dog(DateTime.Now, "Pitbull", "Rambito");
-
-            dog.Name = "Diana";
-            dog.Breed = "Bulldog";
-
-            /*
-             * Readonly variables! They can only be asssigned in a constructor or declaration in the class
-             */
-            //dog.Birth = DateTime.Now;
-            //dog.Color = "Green";
-
-            /*
-             * Constant !
-             * DefaultMood is a constant, its value can't be changed in execution time. 
-             * This variable can only be assigned in its declaration.
-             */
-            //Dog.DefaultMood = "Bored";
-
-            return View(dog);
         }
 
         private void TestArray()
@@ -162,8 +189,11 @@ namespace JungleApp.Controllers
             }
         }
 
-        private void TestRefAndOut()
+        private void Chapter2()
         {
+            TestArray();
+            TestDoWhile();
+
             Debug.WriteLine("############ TestRefAndOut ############");
 
             Debug.WriteLine("############ REF ############");
@@ -269,6 +299,32 @@ namespace JungleApp.Controllers
         private void AddWorkItem(int workItems)
         {
             workItems = workItems + 1;
+        }
+
+        /*
+         * Action Method
+         */
+        public IActionResult ReadonlyKeyword()
+        {
+            var dog = new Dog(DateTime.Now, "Pitbull", "Rambito");
+
+            dog.Name = "Diana";
+            dog.Breed = "Bulldog";
+
+            /*
+             * Readonly variables! They can only be asssigned in a constructor or declaration in the class
+             */
+            //dog.Birth = DateTime.Now;
+            //dog.Color = "Green";
+
+            /*
+             * Constant !
+             * DefaultMood is a constant, its value can't be changed in execution time. 
+             * This variable can only be assigned in its declaration.
+             */
+            //Dog.DefaultMood = "Bored";
+
+            return View(dog);
         }
     }
 }
