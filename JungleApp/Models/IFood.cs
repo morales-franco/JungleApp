@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace JungleApp.Models
 {
-    public class Food : IFood
+    public interface IFood
     {
-        public int FoodId { get; set; }
-        public string Name { get; set; }
+        int FoodId { get; set; }
+        string Name { get; set; }
     }
 }

@@ -35,7 +35,20 @@ namespace JungleApp.Controllers
             int unboxedAge = (int)boxedAge;
 
 
+            Debug.WriteLine("############ Generics ############");
+            var genericAnimal_String = new GenericAnimal<string, Food>("I'm a generic value");
+            var genericAnimal_Int = new GenericAnimal<int, Food>(1234);
 
+            var genericValueString = genericAnimal_String.GetMyGenericProperty();
+            var genericValueInt = genericAnimal_Int.GetMyGenericProperty();
+
+            Debug.WriteLine($"I'm a Generic Animal <string> - value: { genericValueString} ");
+            Debug.WriteLine($"I'm a Generic Animal <int> - value: { genericValueInt} ");
+
+            genericAnimal_String.EatFood(new Food() { FoodId = 1, Name = "Meat" });
+            //genericAnimal_String.DrinkWater<Food>(new Food() { FoodId = 1, Name = "Meat" }); --> Food Not implement IDrink
+            genericAnimal_String.DrinkWater<Drink>(new Drink("water"));
+            genericAnimal_String.DrinkWater<Soap>(new Soap("soap","chicken soap"));//Soap Not implement IDrink & IFood
         }
 
         private void Chapter3()
