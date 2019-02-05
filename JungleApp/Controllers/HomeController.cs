@@ -15,7 +15,41 @@ namespace JungleApp.Controllers
             TestArray();
             TestDoWhile();
             TestRefAndOut();
+            TestCat();
             return View();
+        }
+
+        private void TestCat()
+        {
+            Debug.WriteLine("############ TestConstructor ############");
+            Cat miau = new Cat("Michi", "white");
+
+
+            Debug.WriteLine("############ Test Extensions Methods ############");
+
+            //TODO: Extensions string - Cat
+            if (miau.Name.IsMichiOrEmpty())
+                miau.SayHelloFromTheExtension();
+
+            Debug.WriteLine("############ Test Explicit User Defined Conversion ############");
+            //TODO: explicit operator for conversion
+            string catString = (string)miau;
+            int catInt = (int)miau;
+
+            Debug.WriteLine($"Explicit type Conversion - Cat to string {catString} - Cat to Int { catInt }");
+
+            Debug.WriteLine("############ Test Implicit User Defined Conversion ############");
+            //TODO: implicit operator for conversion
+            List<string> me = miau;
+            me.ForEach(m => Debug.WriteLine($"Implicit type Conversion - {m}"));
+
+            Debug.WriteLine("############ Test Access Specifiers ############");
+
+            miau.Height = 1; //Internal
+            //miau.Weight = 10; //Protected only class and child class
+            miau.Lenght = 3; //protected internal
+            miau.IsVaccinated = false; //public
+
         }
 
         private void TestDoWhile()
