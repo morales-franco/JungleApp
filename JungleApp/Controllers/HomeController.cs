@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using JungleApp.Models;
+using System.Collections;
 
 namespace JungleApp.Controllers
 {
@@ -49,6 +50,93 @@ namespace JungleApp.Controllers
             //genericAnimal_String.DrinkWater<Food>(new Food() { FoodId = 1, Name = "Meat" }); --> Food Not implement IDrink
             genericAnimal_String.DrinkWater<Drink>(new Drink("water"));
             genericAnimal_String.DrinkWater<Soap>(new Soap("soap","chicken soap"));//Soap Not implement IDrink & IFood
+
+            Debug.WriteLine("############ Collection ############");
+            var foodStorage = new FoodStorage();
+
+            Debug.WriteLine("############ Array List ############");
+            //ArrayList Can hold multiple data type
+            foodStorage.StoreSnack(new Food() { FoodId = 1, Name = "Banana" });
+            foodStorage.StoreSnack("Any food");
+            foodStorage.StoreSnack(new Drink("water"));
+            foodStorage.StoreSnack(10000);
+            foodStorage.ShowSnacks();
+
+            Debug.WriteLine("############ Hash Table ############");
+
+            foodStorage.Drinks.Add("Drink1", "Orange Juice");
+            foodStorage.Drinks.Add("Drink2", "Apple Juice");
+            foodStorage.Drinks.Add(1, "Water");
+            //Check - duplicate key
+            if (!foodStorage.Drinks.ContainsKey(1))
+                foodStorage.Drinks.Add(1, "Beer");
+            else
+                Debug.WriteLine("duplicate Key Drink 1");
+
+            foodStorage.Drinks.Add("Soda", 1);
+            foodStorage.Drinks.Add("Moe drink", new Drink() { Description = "strange water" });
+
+            foreach (DictionaryEntry drink in foodStorage.Drinks)
+            {
+                Debug.WriteLine($"Drink Key { drink.Key } - Value { drink.Value }");
+            }
+
+            Debug.WriteLine("############ Queue ############");
+            foodStorage.MaintenanceDays.Enqueue("Monday");
+            foodStorage.MaintenanceDays.Enqueue("Wednesday");
+            foodStorage.MaintenanceDays.Enqueue("Friday");
+            foodStorage.MaintenanceDays.Enqueue("Sunday");
+
+            Debug.WriteLine($"Maintenance days : { foodStorage.MaintenanceDays.Count } count");
+
+            //Show First element but not remove it
+            Debug.WriteLine($"Peek: First Maintenance day : { foodStorage.MaintenanceDays.Peek() }");
+            //Remove First
+            Debug.WriteLine($"Dequeue: First Maintenance day : { foodStorage.MaintenanceDays.Dequeue() }");
+           
+
+            Debug.WriteLine($"Dequeu: Maintenance days : { foodStorage.MaintenanceDays.Count } count");
+
+            foreach (var day in foodStorage.MaintenanceDays)
+            {
+                Debug.WriteLine($"Maintenance days : { day }");
+            }
+
+            var totalMaintenanceDays = foodStorage.MaintenanceDays.Count;
+            for (int i = 0; i < totalMaintenanceDays; i++)
+            {
+                Debug.WriteLine($"Dequeue : { foodStorage.MaintenanceDays.Dequeue() }");
+            }
+
+            Debug.WriteLine($"Maintenance days : { foodStorage.MaintenanceDays.Count } count");
+
+            Debug.WriteLine("############ Stack ############");
+
+            for (int i = 1; i <= 5; i++)
+                foodStorage.Providers.Push($"Provider { i }");
+
+            Debug.WriteLine($"Providers : { foodStorage.Providers.Count } count");
+
+            var totalProviders = foodStorage.Providers.Count;
+            for (int i = 0; i < totalProviders; i++)
+            {
+                Debug.WriteLine($"Pop Provider: { foodStorage.Providers.Pop() }");
+            }
+
+            Debug.WriteLine($"Providers : { foodStorage.Providers.Count } count");
+
+            Debug.WriteLine("############ Dictionary ############");
+            foodStorage.MaintenancePersonnelByDay.Add("Monday", new List<string>() { "Fran", "Pau" });
+
+            if (foodStorage.MaintenancePersonnelByDay.ContainsKey("Monday"))
+                foodStorage.MaintenancePersonnelByDay.Add("Tuesday", new List<string>() { "Lean", "Killyou" });
+
+            foreach (KeyValuePair<string, List<string>> dataMaintenance in foodStorage.MaintenancePersonnelByDay)
+            {
+                Debug.WriteLine($"Day : { dataMaintenance.Key } - Maintenance Personnel { string.Join(",", dataMaintenance.Value.Select(p => p).ToArray())  }");
+            }
+
+
         }
 
         private void Chapter3()
