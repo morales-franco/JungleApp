@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using JungleApp.Models;
 using System.Collections;
+using JungleApp.Extensions;
 
 namespace JungleApp.Controllers
 {
@@ -49,7 +50,7 @@ namespace JungleApp.Controllers
             genericAnimal_String.EatFood(new Food() { FoodId = 1, Name = "Meat" });
             //genericAnimal_String.DrinkWater<Food>(new Food() { FoodId = 1, Name = "Meat" }); --> Food Not implement IDrink
             genericAnimal_String.DrinkWater<Drink>(new Drink("water"));
-            genericAnimal_String.DrinkWater<Soap>(new Soap("soap","chicken soap"));//Soap Not implement IDrink & IFood
+            genericAnimal_String.DrinkWater<Soap>(new Soap("soap", "chicken soap"));//Soap Not implement IDrink & IFood
 
             Debug.WriteLine("############ Collection ############");
             var foodStorage = new FoodStorage();
@@ -93,7 +94,7 @@ namespace JungleApp.Controllers
             Debug.WriteLine($"Peek: First Maintenance day : { foodStorage.MaintenanceDays.Peek() }");
             //Remove First
             Debug.WriteLine($"Dequeue: First Maintenance day : { foodStorage.MaintenanceDays.Dequeue() }");
-           
+
 
             Debug.WriteLine($"Dequeu: Maintenance days : { foodStorage.MaintenanceDays.Count } count");
 
@@ -136,6 +137,62 @@ namespace JungleApp.Controllers
                 Debug.WriteLine($"Day : { dataMaintenance.Key } - Maintenance Personnel { string.Join(",", dataMaintenance.Value.Select(p => p).ToArray())  }");
             }
 
+            Debug.WriteLine("############ Create my custom List - IEnumerable############");
+
+            MondayList<MaintenanceDay> calendar = new MondayList<MaintenanceDay>();
+
+            Debug.WriteLine("Inflate calendar with 14 days");
+            for (int i = 1; i <= 14; i++)
+            {
+                calendar.Add(new MaintenanceDay(DateTime.Now.AddDays(i)));
+            }
+
+            Debug.WriteLine($"Calendar Total days: { calendar.Count() }");
+
+            Debug.WriteLine("We iterate with foreach loop Calendar:");
+            foreach (var mondayDay in calendar)
+            {
+                Debug.WriteLine($"Day: { mondayDay.Day.ToString("dd/MM/yyyy") } - { mondayDay.Day.DayOfWeek.ToString() }");
+            }
+
+            Debug.WriteLine("Now, We iterate with for loop & custom properties:");
+            for (int i = 0; i < calendar.TrueLenght(); i++)
+            {
+                Debug.WriteLine($"Day: { calendar.GetByIndex(i).Day.ToString("dd/MM/yyyy") } - { calendar.GetByIndex(i).Day.DayOfWeek.ToString() }");
+            }
+
+            Debug.WriteLine("Magic! Exist many days!");
+
+            Debug.WriteLine("############ IComparable and Sort ############");
+            List<MaintenanceDay> calendarSort = new List<MaintenanceDay>()
+            {
+                new MaintenanceDay(DateTime.Now, 10),
+                new MaintenanceDay(DateTime.Now, 3),
+                new MaintenanceDay(DateTime.Now, 1),
+                new MaintenanceDay(DateTime.Now, 6),
+                new MaintenanceDay(DateTime.Now, 1),
+                new MaintenanceDay(DateTime.Now, 8),
+                new MaintenanceDay(DateTime.Now, 5)
+            };
+
+            foreach (var dayWithoutSort in calendarSort)
+            {
+                Debug.WriteLine($"Day without sort- Priority: { dayWithoutSort.Priority } ");
+            }
+
+            //TODO: Sort --> Use  IComparable implementation
+            calendarSort.Sort();
+            foreach (var dayWithSort in calendarSort)
+            {
+                Debug.WriteLine($"Day sort- Priority: { dayWithSort.Priority } ");
+            }
+
+            Debug.WriteLine("############ Control Spacing ############");
+
+            string col1 = "123456789-";
+            string col2 = "123456789-";
+
+            Debug.WriteLine("col1 {0,10} | col2 {1, 10}", col1, col2);
 
         }
 
@@ -219,7 +276,7 @@ namespace JungleApp.Controllers
                 Debug.WriteLine($"Animal {counter}: {animals[counter]}");
                 counter++;
 
-            } while (counter < animals.Length );
+            } while (counter < animals.Length);
         }
 
         private void TestArray()
@@ -254,8 +311,8 @@ namespace JungleApp.Controllers
             {
                 for (int column = 0; column < matrizAnimals.GetLength(1); column++)
                 {
-                    Debug.WriteLine($"Row: { row } - Column { column } - Value: { matrizAnimals[row,column] }");
-                } 
+                    Debug.WriteLine($"Row: { row } - Column { column } - Value: { matrizAnimals[row, column] }");
+                }
 
             }
 
