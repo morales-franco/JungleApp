@@ -17,7 +17,15 @@ namespace JungleApp.Controllers
             Chapter2();
             Chapter3();
             Chapter4();
+            Chapter5();
             return View();
+        }
+
+        private void Chapter5()
+        {
+            Debug.WriteLine("############ Delegate ############");
+            var tourist = new Tourist();
+            tourist.Run();
         }
 
         private void Chapter4()
