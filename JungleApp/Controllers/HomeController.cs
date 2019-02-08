@@ -18,7 +18,28 @@ namespace JungleApp.Controllers
             Chapter3();
             Chapter4();
             Chapter5();
+            Chapter10();
+            Chapter11();
             return View();
+        }
+
+        private void Chapter11()
+        {
+            TravelBus bus = new TravelBus();
+            bus.Send(new Provider()
+            {
+                Age = 28,
+                Birth = DateTime.Now,
+                CompletedName = "Chris M",
+                ProviderId = 1,
+                Stuffs = new List<string>() { "Bag", "t-shirts", "pants", "white hat", "laptop" }
+            });
+        }
+
+        private void Chapter10()
+        {
+            AnimalFileExplorer explorer = new AnimalFileExplorer();
+            explorer.Explorer();
         }
 
         private void Chapter5()
