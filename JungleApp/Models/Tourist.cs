@@ -13,6 +13,9 @@ namespace JungleApp.Models
         private delegate void RunAsChamp(int velocity);
         private delegate int GetNumber();
 
+        //TODO: Event is an action that executes when a specified condition satisfied
+        private event Action<int> TiredAlert;
+
         private void RunAsHorse(int velocity)
         {
             Debug.WriteLine($"[Horse]Run at {velocity}");
@@ -88,6 +91,7 @@ namespace JungleApp.Models
             Action<string> talk2 = Ask;
             Action<int, int, string> talk3 = SaysSomething;
 
+            Debug.WriteLine("############ Action ############");
             Presentation(talk1, talk2, talk3);
 
             /*
@@ -104,6 +108,7 @@ namespace JungleApp.Models
 
             Func<string, string, int, string, DateTime, string> getPersonalInfoFunc = GetPersonalInformation;
 
+            Debug.WriteLine("############ Func ############");
             TellMeYourExperiences(getPersonalInfoFunc);
 
             /*
@@ -135,7 +140,8 @@ namespace JungleApp.Models
                 Debug.WriteLine("IS ADULT!");
 
             //TODO: Lambda Expression that doesn't return value
-            Action<int> tellMeIsAdult2 = (int age) => {
+            Action<int> tellMeIsAdult2 = (int age) =>
+            {
                 if (age >= 18)
                     Debug.WriteLine("[Lambda] IS ADULT!(1)");
             };
@@ -150,6 +156,29 @@ namespace JungleApp.Models
             if (getMeAdult(21))
                 Debug.WriteLine("[Lambda] IS ADULT! (2)");
 
+            Debug.WriteLine("############ Events ############");
+            TiredAlert += OnAlert;
+
+            RunKm(10);
+            RunKm(20);
+            RunKm(30);
+        }
+
+        private void RunKm(int kilometers)
+        {
+            Debug.WriteLine($"Run { kilometers } km");
+
+            if (TiredAlert == null)
+                return;
+
+            if (kilometers > 10)
+                TiredAlert(kilometers);
+
+        }
+
+        private void OnAlert(int km)
+        {
+            Debug.WriteLine($"I'm tired! I don't want to run { km } km");
         }
 
         private bool IsAdult(int age)
