@@ -132,6 +132,11 @@ namespace JungleApp.Models
             base.Move();
         }
 
+        private string GetABall()
+        {
+            Debug.WriteLine("Getting a ball!");
+            return "ball";
+        }
 
     }
 }

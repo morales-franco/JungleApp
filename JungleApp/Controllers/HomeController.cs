@@ -20,7 +20,15 @@ namespace JungleApp.Controllers
             Chapter5();
             Chapter10();
             Chapter11();
+            Chapter14();
             return View();
+        }
+
+        private void Chapter14()
+        {
+            Debug.WriteLine("############ Reflection ############");
+            ReflectorAnimal reflector = new ReflectorAnimal();
+            reflector.Explorer();
         }
 
         private void Chapter11()
