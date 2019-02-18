@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using JungleApp.Models;
+using System.Collections;
+using JungleApp.Extensions;
 
 namespace JungleApp.Controllers
 {
@@ -12,14 +14,226 @@ namespace JungleApp.Controllers
     {
         public IActionResult Index()
         {
-            TestArray();
-            TestDoWhile();
-            TestRefAndOut();
-            TestCat();
+            Chapter2();
+            Chapter3();
+            Chapter4();
+            Chapter5();
+            Chapter10();
+            Chapter11();
+            Chapter14();
             return View();
         }
 
-        private void TestCat()
+        private void Chapter14()
+        {
+            Debug.WriteLine("############ Reflection ############");
+            ReflectorAnimal reflector = new ReflectorAnimal();
+            reflector.Explorer();
+        }
+
+        private void Chapter11()
+        {
+            TravelBus bus = new TravelBus();
+            bus.Send(new Provider()
+            {
+                Age = 28,
+                Birth = DateTime.Now,
+                CompletedName = "Chris M",
+                ProviderId = 1,
+                Stuffs = new List<string>() { "Bag", "t-shirts", "pants", "white hat", "laptop" }
+            });
+        }
+
+        private void Chapter10()
+        {
+            AnimalFileExplorer explorer = new AnimalFileExplorer();
+            explorer.Explorer();
+        }
+
+        private void Chapter5()
+        {
+            Debug.WriteLine("############ Delegate ############");
+            var tourist = new Tourist();
+            tourist.Run();
+        }
+
+        private void Chapter4()
+        {
+            /*
+             * TODO: Boxing/Unboxing 
+             * Cast type to object and object to type
+             * Boxing and Unboxing are very expensive in terms of computation operations for a processor. 
+             * Therefore,it is best to avoid using value types where they must be boxed and unboxed many times
+             */
+            Debug.WriteLine("############ Boxing/Unboxing ############");
+            Debug.WriteLine("## Boxing ##");
+            int myRandomNumber = 98;
+            object boxedAge = myRandomNumber;
+
+            Debug.WriteLine("## Unboxing ##");
+            int unboxedAge = (int)boxedAge;
+
+
+            Debug.WriteLine("############ Generics ############");
+            var genericAnimal_String = new GenericAnimal<string, Food>("I'm a generic value");
+            var genericAnimal_Int = new GenericAnimal<int, Food>(1234);
+
+            var genericValueString = genericAnimal_String.GetMyGenericProperty();
+            var genericValueInt = genericAnimal_Int.GetMyGenericProperty();
+
+            Debug.WriteLine($"I'm a Generic Animal <string> - value: { genericValueString} ");
+            Debug.WriteLine($"I'm a Generic Animal <int> - value: { genericValueInt} ");
+
+            genericAnimal_String.EatFood(new Food() { FoodId = 1, Name = "Meat" });
+            //genericAnimal_String.DrinkWater<Food>(new Food() { FoodId = 1, Name = "Meat" }); --> Food Not implement IDrink
+            genericAnimal_String.DrinkWater<Drink>(new Drink("water"));
+            genericAnimal_String.DrinkWater<Soap>(new Soap("soap", "chicken soap"));//Soap Not implement IDrink & IFood
+
+            Debug.WriteLine("############ Collection ############");
+            var foodStorage = new FoodStorage();
+
+            Debug.WriteLine("############ Array List ############");
+            //ArrayList Can hold multiple data type
+            foodStorage.StoreSnack(new Food() { FoodId = 1, Name = "Banana" });
+            foodStorage.StoreSnack("Any food");
+            foodStorage.StoreSnack(new Drink("water"));
+            foodStorage.StoreSnack(10000);
+            foodStorage.ShowSnacks();
+
+            Debug.WriteLine("############ Hash Table ############");
+
+            foodStorage.Drinks.Add("Drink1", "Orange Juice");
+            foodStorage.Drinks.Add("Drink2", "Apple Juice");
+            foodStorage.Drinks.Add(1, "Water");
+            //Check - duplicate key
+            if (!foodStorage.Drinks.ContainsKey(1))
+                foodStorage.Drinks.Add(1, "Beer");
+            else
+                Debug.WriteLine("duplicate Key Drink 1");
+
+            foodStorage.Drinks.Add("Soda", 1);
+            foodStorage.Drinks.Add("Moe drink", new Drink() { Description = "strange water" });
+
+            foreach (DictionaryEntry drink in foodStorage.Drinks)
+            {
+                Debug.WriteLine($"Drink Key { drink.Key } - Value { drink.Value }");
+            }
+
+            Debug.WriteLine("############ Queue ############");
+            foodStorage.MaintenanceDays.Enqueue("Monday");
+            foodStorage.MaintenanceDays.Enqueue("Wednesday");
+            foodStorage.MaintenanceDays.Enqueue("Friday");
+            foodStorage.MaintenanceDays.Enqueue("Sunday");
+
+            Debug.WriteLine($"Maintenance days : { foodStorage.MaintenanceDays.Count } count");
+
+            //Show First element but not remove it
+            Debug.WriteLine($"Peek: First Maintenance day : { foodStorage.MaintenanceDays.Peek() }");
+            //Remove First
+            Debug.WriteLine($"Dequeue: First Maintenance day : { foodStorage.MaintenanceDays.Dequeue() }");
+
+
+            Debug.WriteLine($"Dequeu: Maintenance days : { foodStorage.MaintenanceDays.Count } count");
+
+            foreach (var day in foodStorage.MaintenanceDays)
+            {
+                Debug.WriteLine($"Maintenance days : { day }");
+            }
+
+            var totalMaintenanceDays = foodStorage.MaintenanceDays.Count;
+            for (int i = 0; i < totalMaintenanceDays; i++)
+            {
+                Debug.WriteLine($"Dequeue : { foodStorage.MaintenanceDays.Dequeue() }");
+            }
+
+            Debug.WriteLine($"Maintenance days : { foodStorage.MaintenanceDays.Count } count");
+
+            Debug.WriteLine("############ Stack ############");
+
+            for (int i = 1; i <= 5; i++)
+                foodStorage.Providers.Push($"Provider { i }");
+
+            Debug.WriteLine($"Providers : { foodStorage.Providers.Count } count");
+
+            var totalProviders = foodStorage.Providers.Count;
+            for (int i = 0; i < totalProviders; i++)
+            {
+                Debug.WriteLine($"Pop Provider: { foodStorage.Providers.Pop() }");
+            }
+
+            Debug.WriteLine($"Providers : { foodStorage.Providers.Count } count");
+
+            Debug.WriteLine("############ Dictionary ############");
+            foodStorage.MaintenancePersonnelByDay.Add("Monday", new List<string>() { "Fran", "Pau" });
+
+            if (foodStorage.MaintenancePersonnelByDay.ContainsKey("Monday"))
+                foodStorage.MaintenancePersonnelByDay.Add("Tuesday", new List<string>() { "Lean", "Killyou" });
+
+            foreach (KeyValuePair<string, List<string>> dataMaintenance in foodStorage.MaintenancePersonnelByDay)
+            {
+                Debug.WriteLine($"Day : { dataMaintenance.Key } - Maintenance Personnel { string.Join(",", dataMaintenance.Value.Select(p => p).ToArray())  }");
+            }
+
+            Debug.WriteLine("############ Create my custom List - IEnumerable############");
+
+            MondayList<MaintenanceDay> calendar = new MondayList<MaintenanceDay>();
+
+            Debug.WriteLine("Inflate calendar with 14 days");
+            for (int i = 1; i <= 14; i++)
+            {
+                calendar.Add(new MaintenanceDay(DateTime.Now.AddDays(i)));
+            }
+
+            Debug.WriteLine($"Calendar Total days: { calendar.Count() }");
+
+            Debug.WriteLine("We iterate with foreach loop Calendar:");
+            foreach (var mondayDay in calendar)
+            {
+                Debug.WriteLine($"Day: { mondayDay.Day.ToString("dd/MM/yyyy") } - { mondayDay.Day.DayOfWeek.ToString() }");
+            }
+
+            Debug.WriteLine("Now, We iterate with for loop & custom properties:");
+            for (int i = 0; i < calendar.TrueLenght(); i++)
+            {
+                Debug.WriteLine($"Day: { calendar.GetByIndex(i).Day.ToString("dd/MM/yyyy") } - { calendar.GetByIndex(i).Day.DayOfWeek.ToString() }");
+            }
+
+            Debug.WriteLine("Magic! Exist many days!");
+
+            Debug.WriteLine("############ IComparable and Sort ############");
+            List<MaintenanceDay> calendarSort = new List<MaintenanceDay>()
+            {
+                new MaintenanceDay(DateTime.Now, 10),
+                new MaintenanceDay(DateTime.Now, 3),
+                new MaintenanceDay(DateTime.Now, 1),
+                new MaintenanceDay(DateTime.Now, 6),
+                new MaintenanceDay(DateTime.Now, 1),
+                new MaintenanceDay(DateTime.Now, 8),
+                new MaintenanceDay(DateTime.Now, 5)
+            };
+
+            foreach (var dayWithoutSort in calendarSort)
+            {
+                Debug.WriteLine($"Day without sort- Priority: { dayWithoutSort.Priority } ");
+            }
+
+            //TODO: Sort --> Use  IComparable implementation
+            calendarSort.Sort();
+            foreach (var dayWithSort in calendarSort)
+            {
+                Debug.WriteLine($"Day sort- Priority: { dayWithSort.Priority } ");
+            }
+
+            Debug.WriteLine("############ Control Spacing ############");
+
+            string col1 = "123456789-";
+            string col2 = "123456789-";
+
+            Debug.WriteLine("col1 {0,10} | col2 {1, 10}", col1, col2);
+
+        }
+
+        private void Chapter3()
         {
             Debug.WriteLine("############ TestConstructor ############");
             Cat miau = new Cat("Michi", "white");
@@ -50,6 +264,42 @@ namespace JungleApp.Controllers
             miau.Lenght = 3; //protected internal
             miau.IsVaccinated = false; //public
 
+            Debug.WriteLine("############ Test Indexers ############");
+
+            Debug.WriteLine($"Indexers - Encapsule array - Cat says: Today I eat:  { miau[0] } ");
+
+            Debug.WriteLine("############ Test Interface ############");
+            miau.AskForMoreFood();
+
+            Debug.WriteLine("############ Test Polymorphism ############");
+
+            Debug.WriteLine("#### Test Static Polymorphism ####");
+
+            Debug.WriteLine("## Method Overloading ##");
+            Debug.WriteLine("# By Length of Parameters #");
+            miau.Eat();
+            miau.Eat("fish");
+            miau.Eat("fish1", "fish2");
+
+            Debug.WriteLine("# By Type of Parameters #");
+            miau.Eat(new Food() { FoodId = 1, Name = "super fish" });
+
+            Debug.WriteLine("## Operator Overloading ##");
+
+            Debug.WriteLine($"Cat { miau.Name } says: I have { miau.LivesLeft } lives left");
+            miau++;
+            miau++;
+            Debug.WriteLine($"Cat { miau.Name } says: Now I have { miau.LivesLeft } lives left (overload ++)");
+
+            Debug.WriteLine($"Cat { miau.Name } says: Compare 1 { miau < miau }  - Compare 2 { miau > miau } (overload < & >)");
+
+
+            Debug.WriteLine("#### Test Dynamic Polymorphism ####");
+            Debug.WriteLine("# Virtual methods #");
+            miau.Move();
+            Debug.WriteLine("# Abstract methods #");
+            miau.Eat();
+
         }
 
         private void TestDoWhile()
@@ -63,35 +313,7 @@ namespace JungleApp.Controllers
                 Debug.WriteLine($"Animal {counter}: {animals[counter]}");
                 counter++;
 
-            } while (counter < animals.Length );
-        }
-
-
-
-        /*
-         * Action Method
-         */
-        public IActionResult ReadonlyKeyword()
-        {
-            var dog = new Dog(DateTime.Now, "Pitbull", "Rambito");
-
-            dog.Name = "Diana";
-            dog.Breed = "Bulldog";
-
-            /*
-             * Readonly variables! They can only be asssigned in a constructor or declaration in the class
-             */
-            //dog.Birth = DateTime.Now;
-            //dog.Color = "Green";
-
-            /*
-             * Constant !
-             * DefaultMood is a constant, its value can't be changed in execution time. 
-             * This variable can only be assigned in its declaration.
-             */
-            //Dog.DefaultMood = "Bored";
-
-            return View(dog);
+            } while (counter < animals.Length);
         }
 
         private void TestArray()
@@ -126,8 +348,8 @@ namespace JungleApp.Controllers
             {
                 for (int column = 0; column < matrizAnimals.GetLength(1); column++)
                 {
-                    Debug.WriteLine($"Row: { row } - Column { column } - Value: { matrizAnimals[row,column] }");
-                } 
+                    Debug.WriteLine($"Row: { row } - Column { column } - Value: { matrizAnimals[row, column] }");
+                }
 
             }
 
@@ -162,8 +384,11 @@ namespace JungleApp.Controllers
             }
         }
 
-        private void TestRefAndOut()
+        private void Chapter2()
         {
+            TestArray();
+            TestDoWhile();
+
             Debug.WriteLine("############ TestRefAndOut ############");
 
             Debug.WriteLine("############ REF ############");
@@ -269,6 +494,32 @@ namespace JungleApp.Controllers
         private void AddWorkItem(int workItems)
         {
             workItems = workItems + 1;
+        }
+
+        /*
+         * Action Method
+         */
+        public IActionResult ReadonlyKeyword()
+        {
+            var dog = new Dog(DateTime.Now, "Pitbull", "Rambito");
+
+            dog.Name = "Diana";
+            dog.Breed = "Bulldog";
+
+            /*
+             * Readonly variables! They can only be asssigned in a constructor or declaration in the class
+             */
+            //dog.Birth = DateTime.Now;
+            //dog.Color = "Green";
+
+            /*
+             * Constant !
+             * DefaultMood is a constant, its value can't be changed in execution time. 
+             * This variable can only be assigned in its declaration.
+             */
+            //Dog.DefaultMood = "Bored";
+
+            return View(dog);
         }
     }
 }
