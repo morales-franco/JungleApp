@@ -9,6 +9,17 @@ namespace JungleApp.Models
 
     public class Tourist
     {
+        public string Name { get; private set; }
+        public Tourist(): this("TOURIST")
+        {
+
+        }
+
+        public Tourist(string name)
+        {
+            Name = name;
+        }
+
         //TODO: Delegate
         private delegate void RunAsChamp(int velocity);
         private delegate int GetNumber();

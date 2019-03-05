@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using JungleApp.Models;
 using System.Collections;
 using JungleApp.Extensions;
+using JungleApp.Services;
+using System.Dynamic;
 
 namespace JungleApp.Controllers
 {
@@ -21,7 +23,96 @@ namespace JungleApp.Controllers
             Chapter10();
             Chapter11();
             Chapter14();
+            ExceptionTest();
+            DynamicTest();
             return View();
+        }
+
+        private void DynamicTest()
+        {
+            //TODO: Dynamic types
+            Debug.WriteLine("############ Dynamic Types ############");
+
+            Debug.WriteLine("#### Viewbag is a Expand Object [built-in framework]) ####");
+
+            ViewBag.FootballTeamName = "Jungle Team Futbol Club";
+            ViewBag.FootballTeamCountPlayers = 22;
+            ViewBag.FootballTeamCouch = "Pinguin X";
+
+            Debug.WriteLine($"*Viewbag - FootballTeamName:  { ViewBag.FootballTeamName }");
+            Debug.WriteLine($"*Viewbag - FootballTeamCountPlayers:  { ViewBag.FootballTeamCountPlayers }");
+            Debug.WriteLine($"*Viewbag - FootballTeamCouch:  { ViewBag.FootballTeamCouch }");
+
+            Debug.WriteLine("#### ExpandObject ####");
+            dynamic footballTeam = new ExpandoObject();
+            footballTeam.FootballTeamName = "Jungle Team Futbol Club";
+            footballTeam.FootballTeamCountPlayers = 22;
+            footballTeam.FootballTeamCouch = "Pinguin X";
+
+            Debug.WriteLine($"*ExpandoObject - FootballTeamName:  { footballTeam.FootballTeamName }");
+            Debug.WriteLine($"*ExpandoObject - FootballTeamCountPlayers:  { footballTeam.FootballTeamCountPlayers }");
+            Debug.WriteLine($"*ExpandoObject - FootballTeamCouch:  { footballTeam.FootballTeamCouch }");
+
+            Debug.WriteLine("#### DynamicObject ####");
+            dynamic footballTeamObj = new FootballTeamDynamic();
+            footballTeamObj.FootballTeamName = "Jungle Team Futbol Club";
+            footballTeamObj.FootballTeamCountPlayers = 22;
+            footballTeamObj.FootballTeamCouch = "Pinguin X";
+
+            Debug.WriteLine($"*DynamicObject - FootballTeamName:  { footballTeamObj.FootballTeamName }");
+            Debug.WriteLine($"*DynamicObject - FootballTeamCountPlayers:  { footballTeamObj.FootballTeamCountPlayers }");
+            Debug.WriteLine($"*DynamicObject - FootballTeamCouch:  { footballTeamObj.FootballTeamCouch }");
+
+            Debug.WriteLine("#### Dynamic ####");
+            dynamic teamDynamic = new
+            {
+                FootballTeamName = "Jungle Team Futbol Club",
+                FootballTeamCountPlayers = 22,
+                FootballTeamCouch = "Pinguin X"
+            };
+
+            Debug.WriteLine($"*dynamic - FootballTeamName:  { teamDynamic.FootballTeamName }");
+            Debug.WriteLine($"*dynamic - FootballTeamCountPlayers:  { teamDynamic.FootballTeamCountPlayers }");
+            Debug.WriteLine($"*dynamic - FootballTeamCouch:  { teamDynamic.FootballTeamCouch }");
+        }
+
+        private void ExceptionTest()
+        {
+            //TODO: Exceptions
+            Debug.WriteLine("############ Exceptions ############");
+            var testService = new TestService();
+            try
+            {
+                testService.ThrowOriginalException();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.InnerException);
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+            }
+
+            try
+            {
+                testService.ThrowExceptionWithResetStackTrace();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.InnerException);
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+            }
+
+            try
+            {
+                testService.ThrowCustomException();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.InnerException);
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+            }
         }
 
         private void Chapter14()
