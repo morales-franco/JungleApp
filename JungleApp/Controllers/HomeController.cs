@@ -25,7 +25,17 @@ namespace JungleApp.Controllers
             Chapter14();
             ExceptionTest();
             DynamicTest();
+            SecurityTest();
             return View();
+        }
+
+        private void SecurityTest()
+        {
+            var encryptServices = new EncryptServices();
+            encryptServices.TestSymmetricEncryption();
+            encryptServices.TestAsymmetricEncryption();
+            encryptServices.TestHashing();
+            encryptServices.TestDigitalCertificates();
         }
 
         private void DynamicTest()
