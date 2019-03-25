@@ -26,7 +26,28 @@ namespace JungleApp.Controllers
             ExceptionTest();
             DynamicTest();
             SecurityTest();
+            ParallelTest();
             return View();
+        }
+
+        private List<int> ParallelTest()
+        {
+            List<int> numbers = new List<int>();
+            for (int i = 0; i < 1000; i++)
+            {
+                numbers.Add(i);
+            }
+
+            /*
+             * Parellel before to list, before hit to the bd in a real example
+             */
+
+            var mapperList = numbers.Select(x => x + 1)
+                                    .AsParallel()
+                                    .ToList();
+
+
+            return mapperList;
         }
 
         private void SecurityTest()
