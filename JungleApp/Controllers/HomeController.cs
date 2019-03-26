@@ -27,7 +27,19 @@ namespace JungleApp.Controllers
             DynamicTest();
             SecurityTest();
             ParallelTest();
+            ExamTest();
             return View();
+        }
+
+        private void ExamTest()
+        {
+            int a = 1;
+            int b = 2;
+
+            Debug.WriteLine(a == --b && a == b++);
+            Debug.WriteLine(a == --b || a == b++);
+            Debug.WriteLine(a == --b && b == a++);
+
         }
 
         private List<int> ParallelTest()
