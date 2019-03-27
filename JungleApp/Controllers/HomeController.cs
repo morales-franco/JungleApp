@@ -9,6 +9,8 @@ using System.Collections;
 using JungleApp.Extensions;
 using JungleApp.Services;
 using System.Dynamic;
+using System.Text;
+using System.IO;
 
 namespace JungleApp.Controllers
 {
@@ -33,13 +35,83 @@ namespace JungleApp.Controllers
 
         private void ExamTest()
         {
+            TestIncrement();
+            TestStringBuilder();
+            Test1();
+            Test2();
+            
+        }
+
+        private void Test2()
+        {
+            //Ex A
+            //Write data to File
+            // Could not find a part of the path 'C:\Temp\483\temp1.txt'. --> If the file Not Exist!
+            //Only append!
+            StreamWriter writer = new StreamWriter(@"C:\Temp\483\temp1.txt");
+            writer.WriteLine("Hola!");
+            writer.WriteLine("Como va!");
+            writer.Close();
+
+        }
+
+        private void Test1()
+        {
+            //Ex A
+            decimal[] loanAmounts = { 303m, 1000m, 85579m, 501.51m };
+
+            IEnumerable<decimal> loanQuery =
+                from amount in loanAmounts
+                where amount % 2 == 0
+                orderby amount ascending
+                select amount;
+
+            //Ex B
+            var values = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+            //paging 10 - page 2 is required
+            var page = values.Skip(5).Take(5).ToList();
+        }
+
+        private void TestStringBuilder()
+        {
+            var sb = new StringBuilder();
+            sb.Append("First Line");
+            sb.AppendLine();
+            sb.Append("Second Line");
+            var result = sb.ToString();
+        }
+
+        private void TestIncrement()
+        {
+            //Ejemplo 1
+            /*
+             * a == --b : First decrement b then compate
+             * a == b++: First compare & then increment b
+             */
             int a = 1;
             int b = 2;
+            int c = 3;
 
+            //1 == 1 && (1 == 1) then increment b to 2
             Debug.WriteLine(a == --b && a == b++);
+
+            //1 == 1 TRUE not advance to the next term
             Debug.WriteLine(a == --b || a == b++);
+
+            //1 == 0 FALSE
             Debug.WriteLine(a == --b && b == a++);
 
+            //decrement to 2 and then show()
+            Debug.WriteLine(--c);
+
+            //show 2 and then increment to 3
+            Debug.WriteLine(c++);
+
+            //4 + 2 show 6
+            Debug.WriteLine(c++ + 2);
+
+            //5 +2
+            Debug.WriteLine(++c + 2);
         }
 
         private List<int> ParallelTest()
