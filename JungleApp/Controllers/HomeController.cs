@@ -11,6 +11,9 @@ using JungleApp.Services;
 using System.Dynamic;
 using System.Text;
 using System.IO;
+using System.Runtime.Serialization.Json;
+using System.Runtime.Serialization;
+using System.Data;
 
 namespace JungleApp.Controllers
 {
@@ -39,19 +42,84 @@ namespace JungleApp.Controllers
             TestStringBuilder();
             Test1();
             Test2();
+            Test3();
+            Test4();
+            Test5();
             
+        }
+
+        private void Test5()
+        {
+            List<Type> types = (AppDomain.CurrentDomain.GetAssemblies()
+                 .SelectMany(t => t.GetTypes())
+                 .Where(t => t.IsClass && t.Assembly == this.GetType().Assembly))
+                 .ToList();
+        }
+
+
+
+        private void Test4()
+        {
+            EntityWcf entity = new EntityWcf();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                DataContractSerializer ser = new DataContractSerializer(typeof(EntityWcf));
+                ser.WriteObject(ms, new EntityWcf()
+                {
+                    ID = 1,
+                    Age = 20,
+                    Name = "Test"
+                });
+                ms.Seek(0, 0);
+                StreamReader reader = new StreamReader(ms);
+                var result = reader.ReadToEnd();
+            }
+        }
+
+        private void Test3()
+        {
+            //Example 1
+            Mock test = new Mock();
+            var a =  test.MockSum(1, 2);
+
+
         }
 
         private void Test2()
         {
+            string path = @"C:\Temp\483\temp1.txt";
             //Ex A
             //Write data to File
-            // Could not find a part of the path 'C:\Temp\483\temp1.txt'. --> If the file Not Exist!
+            //[EXCEPTION]Could not find a part of the path 'C:\Temp\483\temp1.txt'. --> If the file Not Exist!
             //Only append!
-            StreamWriter writer = new StreamWriter(@"C:\Temp\483\temp1.txt");
+            //StreamWriter doesn't create file if it doesn't exist.
+            StreamWriter writer = new StreamWriter(path);
             writer.WriteLine("Hola!");
             writer.WriteLine("Como va!");
             writer.Close();
+
+            //Ex B 
+            //Read data to file
+            //[EXCEPTION]Could not find a part of the path 'C:\Temp\483\temp1.txt'. --> If the file Not Exist!
+            //StreamWriter doesn't create file if it doesn't exist.
+
+            using (StreamReader sr = new StreamReader(path))
+            {
+                try
+                {
+                    string line;
+                    while ((line = sr.ReadLine()) != null )
+                    {
+                        Debug.WriteLine(line);
+                    }
+                }
+                catch (FileNotFoundException e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+            }
+
+
 
         }
 
@@ -79,6 +147,13 @@ namespace JungleApp.Controllers
             sb.AppendLine();
             sb.Append("Second Line");
             var result = sb.ToString();
+
+            var concatString = new StringBuilder("HoLa");
+            concatString.Append(" tODo BiEn");
+
+            bool compareResult = concatString.ToString().ToUpper() == "HOLA TODO BIEN";
+            compareResult = concatString.ToString().Equals("HOLA TODO BIEN", StringComparison.CurrentCultureIgnoreCase);
+
         }
 
         private void TestIncrement()
