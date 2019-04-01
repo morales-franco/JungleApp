@@ -14,6 +14,7 @@ using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Runtime.Serialization;
 using System.Data;
+using System.Globalization;
 
 namespace JungleApp.Controllers
 {
@@ -45,7 +46,20 @@ namespace JungleApp.Controllers
             Test3();
             Test4();
             Test5();
+            Test6();
             
+        }
+
+        private void Test6()
+        {
+            //Ex A
+            //date to UTC
+            var dateString = "12/10/2015 6:18:00 AM";
+            var validateDate = DateTime.Now;
+            bool validDate = DateTime.TryParse(dateString, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal, out validateDate);
+
+
+
         }
 
         private void Test5()
