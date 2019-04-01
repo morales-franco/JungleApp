@@ -14,6 +14,7 @@ using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Runtime.Serialization;
 using System.Data;
+using System.Xml;
 using System.Globalization;
 
 namespace JungleApp.Controllers
@@ -74,7 +75,9 @@ namespace JungleApp.Controllers
 
         private void Test4()
         {
+            var xml = string.Empty;
             EntityWcf entity = new EntityWcf();
+
             using (MemoryStream ms = new MemoryStream())
             {
                 DataContractSerializer ser = new DataContractSerializer(typeof(EntityWcf));
@@ -82,19 +85,42 @@ namespace JungleApp.Controllers
                 {
                     ID = 1,
                     Age = 20,
-                    Name = "Test"
+                    Name = "Test",
+                    EntityAlias = "Best Entity"
                 });
                 ms.Seek(0, 0);
                 StreamReader reader = new StreamReader(ms);
-                var result = reader.ReadToEnd();
+                xml = reader.ReadToEnd();
             }
+
+
+            //MemoryStream stream = new MemoryStream();
+            //IFormatter formatter = new BinaryFormatter();
+            //formatter.Serialize(stream, o);
+            //return stream;
+
+            using(MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(xml)))
+            {
+                DataContractSerializer serDeserialize = new DataContractSerializer(typeof(EntityWcf));
+                XmlDictionaryReader readerAux = XmlDictionaryReader.CreateTextReader(ms.ToArray(), new XmlDictionaryReaderQuotas());
+                EntityWcf p = (EntityWcf)serDeserialize.ReadObject(readerAux);
+            }
+
+            using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(xml)))
+            {
+                DataContractSerializer serDeserialize = new DataContractSerializer(typeof(EntityWcf));
+                XmlDictionaryReader readerAux = XmlDictionaryReader.CreateTextReader(ms.ToArray(), new XmlDictionaryReaderQuotas());
+                EntityWcf p = (EntityWcf)serDeserialize.ReadObject(readerAux);
+            }
+
+
         }
 
         private void Test3()
         {
             //Example 1
             Mock test = new Mock();
-            var a =  test.MockSum(1, 2);
+            var a = test.MockSum(1, 2);
 
 
         }
@@ -122,7 +148,7 @@ namespace JungleApp.Controllers
                 try
                 {
                     string line;
-                    while ((line = sr.ReadLine()) != null )
+                    while ((line = sr.ReadLine()) != null)
                     {
                         Debug.WriteLine(line);
                     }
