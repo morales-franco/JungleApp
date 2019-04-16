@@ -13,7 +13,25 @@ namespace JungleApp.Batch
         {
             Console.WriteLine("---------- Welcome ----------");
             TestConfigSections();
+            TestReflection();
             Console.Read();
+        }
+
+        private static void TestReflection()
+        {
+            ShowTitle("---------- TEST REFLECTION ----------");
+
+            CommunicatorService communicatorService = new CommunicatorService();
+
+            //TODO: Getting type from String - Instance this type in a class [Type lives in a external assembly]
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            ShowTitle("--------- Getting type from String - Instance this type in a class [Type lives in a external assembly] ---------");
+
+            //TODO: AssemblyQualifiedName: namespaces.class, assemblyName: Integra.Communicator.Zk.CommunicatorApi,Integra.Communicator.Zk
+            var communicator = communicatorService.GetCommunicator("Integra.Communicator.Zk.CommunicatorApi,Integra.Communicator.Zk");
+
+            foreach (var user in communicator.GetUsers())
+                Console.WriteLine($"Identifier: { user.Identifier }");
         }
 
         private static void TestConfigSections()

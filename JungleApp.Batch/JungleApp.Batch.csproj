@@ -32,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Integra.Communicator.Contract">
+      <HintPath>..\Libraries\Integra.Communicator.Contract.dll</HintPath>
+    </Reference>
+    <Reference Include="Integra.Communicator.Zk">
+      <HintPath>..\Libraries\Integra.Communicator.Zk.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -47,6 +53,7 @@
     <Compile Include="Infraestructure\ConfigurationAppCountriesSection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CommunicatorService.cs" />
     <Compile Include="Services\CountryService.cs" />
   </ItemGroup>
   <ItemGroup>
