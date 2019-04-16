@@ -18,6 +18,7 @@ namespace JungleApp.Batch
 
         private static void TestConfigSections()
         {
+            //TODO: Custom sections in App.Config
             ShowTitle("---------- TEST CONFIG SECTIONS ----------");
 
             CountryService countryService = new CountryService();

@@ -8,7 +8,7 @@ namespace JungleApp.Batch.Infraestructure
         private const string _CountriesCollectionName = "Countries";
 
         [ConfigurationProperty(_CountriesCollectionName)]
-        [ConfigurationCollection(typeof(CountriesCollection), AddItemName = "Country")]
+        [ConfigurationCollection(typeof(CountriesCollection), AddItemName = "Country")] //Element name of Collection
         public CountriesCollection Countries {
             get
             {
@@ -18,6 +18,7 @@ namespace JungleApp.Batch.Infraestructure
 
     }
 
+    //This class teach to the framework to read the Countries Collection
     public class CountriesCollection : ConfigurationElementCollection
     {
         protected override ConfigurationElement CreateNewElement()
@@ -31,6 +32,7 @@ namespace JungleApp.Batch.Infraestructure
         }
     }
 
+    //This class teach to the framework to read the Country element
     public class CountryConfigurationElement : ConfigurationElement
     {
         [ConfigurationProperty("name", IsRequired = true)]
