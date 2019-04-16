@@ -6,3 +6,8 @@
 /.vs/JungleApp/v15
 /JungleApp/obj
 /JungleApp/Sample.xml
+/.vs/JungleApp/DesignTimeBuild
+/.vs/JungleApp/v16/Server/sqlite3
+/.vs/JungleApp/v16
+/JungleApp.Batch/bin/Debug
+/JungleApp.Batch/obj/Debug
