@@ -15,4 +15,5 @@
 11. Delegates
 12. Tasks
 13. Files
-15. Security
+14. Security
+15. Custom Sections in App.Settings (Batch project)
