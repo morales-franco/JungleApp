@@ -24,7 +24,7 @@ namespace JungleApp.Batch.Services
         /// this method searches in the specified assembly
         /// </param>
         /// <returns></returns>
-    public ICommunicator GetCommunicator(string typeName)
+        public ICommunicator GetCommunicator(string typeName)
         {
             Type communicatorType = Type.GetType(typeName);
 
@@ -37,7 +37,7 @@ namespace JungleApp.Batch.Services
                 Port = 993
             } }) as ICommunicator;
 
-            return  communicator;
+            return communicator;
         }
 
     }
