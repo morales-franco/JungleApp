@@ -12,9 +12,17 @@ namespace JungleApp.Batch
         static void Main(string[] args)
         {
             Console.WriteLine("---------- Welcome ----------");
-            TestConfigSections();
-            TestReflection();
+            //TestConfigSections();
+            //TestReflection();
+            TestTasks();
             Console.Read();
+        }
+
+        private static void TestTasks()
+        {
+            ShowTitle("---------- TEST TASKS ----------");
+            TaskServices taskServices = new TaskServices();
+            taskServices.ExecuteConversation();
         }
 
         private static void TestReflection()
