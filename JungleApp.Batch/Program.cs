@@ -16,7 +16,10 @@ namespace JungleApp.Batch
             //TestConfigSections();
             //TestReflection();
             //TestStaticClass();
+            //TestTasks();
             TestLazy();
+
+            
             Console.Read();
         }
 
@@ -37,6 +40,13 @@ namespace JungleApp.Batch
         {
             ShowTitle("---------- TEST STATIC CLASS----------");
             MyStaticTestClass test = new MyStaticTestClass();
+        }
+
+        private static void TestTasks()
+        {
+            ShowTitle("---------- TEST TASKS ----------");
+            TaskServices taskServices = new TaskServices();
+            taskServices.ExecuteConversation();
         }
 
         private static void TestReflection()
