@@ -50,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Country.cs" />
+    <Compile Include="Entities\MyLazyAuthor.cs" />
+    <Compile Include="Entities\MyStaticTestClass.cs" />
     <Compile Include="Infraestructure\ConfigurationAppCountriesSection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

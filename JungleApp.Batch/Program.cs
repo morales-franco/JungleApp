@@ -1,4 +1,5 @@
-﻿using JungleApp.Batch.Services;
+﻿using JungleApp.Batch.Entities;
+using JungleApp.Batch.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,30 @@ namespace JungleApp.Batch
         static void Main(string[] args)
         {
             Console.WriteLine("---------- Welcome ----------");
-            TestConfigSections();
-            TestReflection();
+            //TestConfigSections();
+            //TestReflection();
+            //TestStaticClass();
+            TestLazy();
             Console.Read();
+        }
+
+        private static void TestLazy()
+        {
+            MyLazyAuthor author = new MyLazyAuthor("Fran");
+            Console.WriteLine($"Author Name: {author.Name}");
+
+            Console.WriteLine("Now I invoke the Books property..");
+            //Load books in lazy form!
+            var books = author.Books.Value;
+
+            foreach (var book in books)
+                Console.WriteLine($"Book Name: {book.Name}");
+        }
+
+        private static void TestStaticClass()
+        {
+            ShowTitle("---------- TEST STATIC CLASS----------");
+            MyStaticTestClass test = new MyStaticTestClass();
         }
 
         private static void TestReflection()

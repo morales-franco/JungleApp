@@ -17,3 +17,5 @@
 13. Files
 14. Security
 15. Custom Sections in App.Settings (Batch project)
+16. Static constructors vs instance constructors
+17. Lazy<T>
