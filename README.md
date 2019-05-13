@@ -19,3 +19,4 @@
 15. Custom Sections in App.Settings (Batch project)
 16. Static constructors vs instance constructors
 17. Lazy<T>
+18. Pattern Matching c# 8

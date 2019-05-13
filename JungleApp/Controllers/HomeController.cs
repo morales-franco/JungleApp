@@ -23,19 +23,26 @@ namespace JungleApp.Controllers
     {
         public IActionResult Index()
         {
-            Chapter2();
-            Chapter3();
-            Chapter4();
-            Chapter5();
-            Chapter10();
-            Chapter11();
-            Chapter14();
-            ExceptionTest();
-            DynamicTest();
-            SecurityTest();
-            ParallelTest();
-            ExamTest();
+            //Chapter2();
+            //Chapter3();
+            //Chapter4();
+            //Chapter5();
+            //Chapter10();
+            //Chapter11();
+            //Chapter14();
+            //ExceptionTest();
+            //DynamicTest();
+            //SecurityTest();
+            //ParallelTest();
+            //ExamTest();
+            TestPatternMatching();
             return View();
+        }
+
+        private void TestPatternMatching()
+        {
+            PatternMatchingService service = new PatternMatchingService();
+            service.TestPatternMatching();
         }
 
         private void ExamTest()
