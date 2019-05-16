@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="JungleApp.Models.PatternMatching.Animal">
+    <Position X="3.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAABAAAQAgAQAAAIAEAABAAAAAAAIAAA=</HashCode>
+      <FileName>Models\PatternMatching\Animal.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Classification" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="JungleApp.Models.PatternMatching.Cow">
+    <Position X="1" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Models\PatternMatching\Cow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JungleApp.Models.PatternMatching.Lion">
+    <Position X="3.25" Y="4.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Models\PatternMatching\Lion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JungleApp.Models.PatternMatching.Pig">
+    <Position X="5.75" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Models\PatternMatching\Pig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="JungleApp.Models.PatternMatching.eClassificationAnimal">
+    <Position X="6.5" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAQAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\PatternMatching\eClassificationAnimal.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="JungleApp.Models.PatternMatching.eFavoriteFood">
+    <Position X="6.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Models\PatternMatching\eFavoriteFood.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
